@@ -96,5 +96,5 @@ draft: false
 #### 第十步:
 继续在Cmder中输入 hugo。这样是在angelafangguyue.github.io.creator下面创建一个public的文件夹，里面还有一些文件以及文件夹。
 #### 后续的步骤请参考上面的即可。
-*注意要将最上面的draft值置为 false。这样在使用hugo命令的时候，才会将该博客同步到public文件夹中。*
+*如果后续要写博客，注意写完后，要将文档中最上面的draft值置为 false。这样在使用hugo命令的时候，才会将该博客同步到public文件夹中。即当再次写博客的时候，在angelafangguyue.github.io.generator的contents的posts文件夹下，新建一个文档。这一步也可以通过命令操作。即用Cmder打开该文件夹angelafangguyue.github.io.generator，输入命令hugo new posts/博客名.md来创建。上面的angelafangguyue.github.io.generator这个文件夹，我们个人创建的名字是不一样的，请勿搞错。博客写完之后，将draft的值置为false。仍在当前目录下（我的就是angelafangguyue.github.io.generator）输入命令hugo，这样编写的内容就会同步到public文件下。然后输入命令 cd public，git add .,git commit -v,git push。就会将public重新上传到对应的远程仓库。你新写的博客就会出现了。*
 ### 使用 GitHub Pages 预览 HTML：就是进入创建的仓库的setting中，找到GitHub Pages，在source中选择master branch。会生成一个网址，点击即可访问。
