@@ -1,7 +1,7 @@
 ---
 title: "如何使用hugo搭建属于自己的博客"
 date: 2019-10-12T16:54:04+08:00
-draft: true
+draft: false
 ---
 # 搭建一个属于自己的博客。
 ## hugo:一个使用go语言写的博客生成器，速度快！
@@ -96,5 +96,5 @@ draft: true
 #### 第十步:
 继续在Cmder中输入 hugo。这样是在angelafangguyue.github.io.creator下面创建一个public的文件夹，里面还有一些文件以及文件夹。
 #### 后续的步骤请参考上面的即可。
-
+*注意要将最上面的draft值置为 false。这样在使用hugo命令的时候，才会将该博客同步到public文件夹中。*
 ### 使用 GitHub Pages 预览 HTML：就是进入创建的仓库的setting中，找到GitHub Pages，在source中选择master branch。会生成一个网址，点击即可访问。
