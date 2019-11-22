@@ -62,7 +62,7 @@ zh-CN/docs/Web/HTML 和/baidu 是路径，?wd=hugo&tn=monline_4_dg 是查询参�
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>互联网协议地址（英语：Internet Protocol Address，又译为网际协议地址），缩写为 IP 地址（英语：IP Address），是分配给网络上使用网际协议（英语：Internet Protocol, IP）的设备的数字标签。</b>常见的 IP 地址分为 IPv4 与 IPv6 两大类，但是也有其他不常用的小分类。
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-ping 是一种电脑网络工具，用来测试数据包能否透过 IP 协议到达特定主机。我们会在 windows 的命令行下输入 ping baidu.com,测试电脑是否能连接访问百度。如下图![](/images/task19_url/ping.PNG)
+ping 是一种电脑网络工具，用来测试数据包能否透过 IP 协议到达特定主机。我们会在 windows 的命令行下输入 ping baidu.com,测试电脑是否能连接访问百度。如下图![](/images/task18_url/ping.PNG)
 
 ---
 
