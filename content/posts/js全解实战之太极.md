@@ -18,7 +18,7 @@ featured_image:
 
 [4:重点四：适配移动端](#a4)
 
-
+<b style="font-size:20px;">点击查看[预览效果](http://angelafang.top/task29parcel_cv/dist/first.html)。</b>
 
 #### <span style="color:red;">重点一：将所写的内容动态显示在页面上</span>{#a1}
 
