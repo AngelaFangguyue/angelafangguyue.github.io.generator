@@ -58,7 +58,7 @@ jQuery 就是获取元素，进行操作。通过 jQuery 构造函数构造出�
 
 #### 2.1:获取元素{#a21}
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>第一步：往往就是将一个选择表达式，放进构造函数\_ jQuery()（简写为\$()），然后得到被选中的元素。</strong>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>第一步：往往就是将一个选择表达式，放进构造函数\_ jQuery()（简写为$()），然后得到被选中的元素。</strong>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如$("#test"),就是要去获取 id 为 test 的元素。要注意$("#test")它本身是一个对象，里面有方法，可以对选中的 id 为 test 的元素进行操作。即若 let test = \$("#test")，test 是一个 jQuery 对象，利用这个对象以及对象里的方法，我们可以去对获取到的 id 为 test 的元素进行操作。当然获取到的元素可能有多个。
 
@@ -170,5 +170,12 @@ jQuery 就是获取元素，进行操作。通过 jQuery 构造函数构造出�
     .eq(0) //选中第一个h3元素
     .html('World'); //将它的内容改为World
 
-文章主要借鉴了阮老师的 [jQuery 设计思想](http://www.ruanyifeng.com/blog/2011/07/jquery_fundamentals.html)这篇博客。阮老师写的浅显易懂，条理清晰。其中的工具方法，事件绑定以及特殊效果,我这里也没细细介绍。具体可以参考老师的博客学习一下！关于 jquery 的使用，[
-jQuery API 中文文档](https://www.jquery123.com/)进行查阅。
+以上只是对 jQuery 的一个初步介绍，jQuery 还有很多东西，比如 工具方法 、事件操作 、动画等。如果要想掌握好 jQuery 还是需要从项目中来。当然前端发展到今天 jQuery 大家可能都不用了，但是我们还是可以学习一下它的一些思想，也利于我们更好的去掌握更加新的框架，万变不离其宗，加油呀！
+
+参照 jQuery 的思想，自己封装了一些方法 [dom-api](https://github.com/AngelaFangguyue/dom_api_jQuery) 。
+
+参考学习资料：
+
+[jQuery 设计思想](http://www.ruanyifeng.com/blog/2011/07/jquery_fundamentals.html)
+
+[jQuery API 中文文档](https://www.jquery123.com/)
