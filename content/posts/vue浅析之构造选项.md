@@ -27,6 +27,8 @@ featured_image:
 
 [8:vue 数据响应式的理解](#a8)
 
+[9:关于vue选项数据之computed和watch的区别](#a9)
+
 ---
 
 #### 1:options{#a1}
@@ -300,3 +302,17 @@ Vue.component('example', {
   }
 })
 ```
+---
+#### 9：关于vue选项数据之computed和watch的区别{#a9}
+
+computed是计算属性，用的时候，直接当属性去使用，不必写括号去调用。会依赖数据的变化去计算属性。计算属性的结果会被缓存，除非依赖的响应式属性变化才会重新计算。
+
+
+watch是监听侦听。当在数据发生变化时，执行函数。watch提供了两个选项，immediate，默认是false，true的话表示设置监听之后被立即调用。deep，默认是false，true的话表示监听会在任何被侦听的对象的property改变时被调用，不论其被嵌套多深。
+
+如果一个数据依赖于其他数据，那么把这个数据设计为computed；如果需要在某个数据变化时做一些事情，使用watch来观察这个数据变化。
+
+下面的例子，有两个展示板块，上面用到的是computed计算属性，下面用到的是watch监听。
+![](/images/task56Vue/com.png)
+![](/images/task56Vue/comm1.png)
+![](/images/task56Vue/comm2.png)
