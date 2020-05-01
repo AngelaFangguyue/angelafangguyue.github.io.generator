@@ -11,8 +11,10 @@ featured_image:
 
 axios 是 Vue 官方推荐的一个 HTTP 库，用 axios 官方简介来介绍它，就是：Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。
 
-虽然，axios 是个优秀的 HTTP 库，但是，直接在项目中使用并不是那么方便，所以，我们需要对其进行一定程度上的配置封装，减少重复代码，方便调用。下面，我们就来聊聊 Vue 中 axios 的封装。
-开始
+虽然，axios 是个优秀的 HTTP 库，但是，直接在项目中使用并不是那么方便，所以，我们需要对其进行一定程度上的配置封装，减少重复代码，方便调用。
+
+在 vue 项目中，和后台交互获取数据这块，我们通常使用的是 axios 库，它是基于 promise 的 http 库，可运行在浏览器端和 node.js 中。他有很多优秀的特性，例如拦截请求和响应、取消请求、转换 json、客户端防御 XSRF 等
+
 其实，网上关于 axios 封装的代码不少，但是大部分都是在入口文件（main.js）中进行 axios 全局对象属性定义的形式进行配置，类似于如下代码：
 
 ```
@@ -35,7 +37,7 @@ const service = axios.create({
 })
 ```
 
-接着就是在配置项中配置，根据环境设置 baseURL，统一设置请求头，跨域超时响应码处理，请求响应处理，拦截器等。具体的封装代码如下：
+接着就是在配置项中配置，根据环境设置 baseURL，统一设置请求头，设置跨域超时响应码的处理，请求响应处理，拦截器等。具体的封装代码如下：
 
 ```
 // http.ts
@@ -147,6 +149,7 @@ service.interceptors.response.use((response: AxiosResponse) => {
 export default service
 ```
 
-axios 在默认请求头为 application/json 时，会自动进行序列化处理，不需要开发者再去配置这里了，
+axios 在默认请求头为 application/json 时，会自动进行序列化处理，不需要开发者再去配置这里了。
 
-[参考链接：](https://juejin.im/post/5da90c3e6fb9a04e031c0413)
+[参考链接 1：](https://juejin.im/post/5da90c3e6fb9a04e031c0413)
+[参考链接 2：](https://juejin.im/post/5b55c118f265da0f6f1aa354)
