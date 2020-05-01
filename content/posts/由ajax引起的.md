@@ -316,11 +316,136 @@ cancel();
 
 3：每次在响应前也要设置拦截器，将已经执行完成的请求取消掉，同时在数组中把相对应的 ajax 请求的有关数据删除掉。
 
+代码：
+
+```
+ import axios from 'axios';
+
+    axios.defaults.timeout = 5000;
+    axios.defaults.baseURL ='';
+
+    let pending = []; //声明一个数组用于存储每个ajax请求的取消函数和ajax标识
+    let cancelToken = axios.CancelToken;
+    let removePending = (ever) => {
+        for(let p in pending){
+            if(pending[p].u === ever.url + '&' + ever.method) { //当当前请求在数组中存在时执行函数体
+                pending[p].f(); //执行取消操作
+                pending.splice(p, 1); //把这条记录从数组中移除
+            }
+        }
+    }
+
+    //http request 拦截器
+    axios.interceptors.request.use(
+    config => {
+      config.data = JSON.stringify(config.data);
+      config.headers = {
+        'Content-Type':'application/x-www-form-urlencoded'
+      }
+      // ------------------------------------------------------------------------------------
+      removePending(config); //在一个ajax发送前执行一下取消操作
+      config.cancelToken = new cancelToken((c)=>{
+         // 这里的ajax标识我是用请求地址&请求方式拼接的字符串，当然你可以选择其他的一些方式
+         pending.push({ u: config.url + '&' + config.method, f: c });
+      });
+      // -----------------------------------------------------------------------------------------
+      return config;
+    },
+    error => {
+      return Promise.reject(err);
+    }
+  );
+  //http response 拦截器
+  axios.interceptors.response.use(
+    response => {
+      // ------------------------------------------------------------------------------------------
+      removePending(res.config);  //在一个ajax响应后再执行一下取消操作，把已经完成的请求从pending中移除
+      // -------------------------------------------------------------------------------------------
+      if(response.data.errCode ==2){
+        router.push({
+          path:"/login",
+          querry:{redirect:router.currentRoute.fullPath}//从哪个页面跳转
+        })
+      }
+      return response;
+    },
+    error => {
+      return Promise.reject(error)
+    }
+  )
+```
+
+[参考链接](https://www.jianshu.com/p/22b49e6ad819)
 这种做法其实取消的是上一次的请求，这样请求已经发出去了，还是会增加服务器的负担。取消接口请求有可能是在请求发出去的过程中中断，也有可能是在 response 回来的路上中断。目前这一只能保证前端获取数据正常。
 
 所以防止重复点击可以让按钮置灰或 loading。
 
 另外可以在服务器执行的时候给 session 加个标记，结束时取消标记，前端根据这个去查标记是否存在，不存在才发请求。
+
+另外的解决思路：
+
+设置一个 cancelFlag 作为标志符，默认为 true，在请求拦截器时，判断如果 cancelFlag 为 true，就可以发送请求，且将 cancelFlag 设为 false。当 cancelFlag 为 false,就取消请求。在响应拦截器中再将 cancelFlag 设为 true。说明只有当一个请求发送且收到响应后，才可以发送另一个请求。<span style="color:red;">这里存在的问题：cancelFlag 是全局变量，这样多页面多个接口请求时，互相会有影响。</span>这里的解决办法就是在 axios.js 中构建构造函数，这样可以让 cancelFlag 私有化，但是这样的方式会导致占有大量内存。
+版本 1 的代码：
+
+```
+import Vue from 'vue'
+import axios from 'axios'
+import {Indicator} from 'mint-ui'
+Vue.component(Indicator)
+let CancelToken = axios.CancelToken //取消请求
+let cancelFlag = true
+//设置公共部分，请求头和超时时间
+axios.defaults.headers = {
+    'X-Requested-With': 'XMLHttpRequest'
+}
+axios.defaults.timeout = 20000
+//在请求拦截器时
+axios.interceptors.request.use(config => {
+    if (cancelFlag) {
+        cancelFlag = false
+        Indicator.open()
+    } else {
+        cancelToken: new CancelToken (c => {
+            cancel = c
+        })
+        cancel()
+    }
+    return config
+}, error => {
+    return Promise.reject(error)
+})
+axios.interceptors.response.use(config => {
+    cancelFlag = true
+    Indicator.close()
+    return config
+}, error => {
+    //
+})
+```
+
+版本二：异步请求时，带上一个参数 requestName。
+这里一开始的疑惑是，当请求 a 带上参数 requestName 后，发送多次请求，判断 axios[requestName]和 axios[requestName].cancel 存在时，会做取消处理。那发送成功后，再点击时，axios[requestName]和 axios[requestName].cancel 还是会存在啊。这样还是会执行 axios[requestName].cancel()。
+这里是因为当上一次请求发送成功后，其 axios[requestName].cancel 这个方法已经失效，即使执行了这个方法也不起作用。axios[requestName].cancel 的值永远是上一次的请求的取消回调。当上一次请求成功后，该回调会失效。
+
+```
+axios.interceptors.request.use(config => {
+    let requestName = config.data.requestName
+    if (requestName) {
+        if (axios[requestName] && axios[requestName].cancel) {
+            axios[requestName].cancel()
+        }
+        config.cancelToken = new CancelToken (c => {
+            axios[requestName] = {}
+            axios[requestName].cancel = c
+        })
+    }
+    return config
+}, error => {
+    return Promise.reject(error)
+})
+```
+
+[参考链接：](https://juejin.im/post/5b714a44f265da27ea319fcb)
 
 ### localStorage 等{#a5}
 
